@@ -1,5 +1,5 @@
 package models.interfaces;
 
 public interface Remunerada {
-    void taxaCorrecao();
+    void taxaCorrecao(double taxa);
 }
