@@ -12,6 +12,9 @@ public class ContaPoupanca extends Conta implements Remunerada {
 
     public ContaPoupanca(String correntistaNome, String correntistaCPF, double saldo) {
         super(correntistaNome, correntistaCPF, saldo);
+        if (saldo < 0) {
+            this.saldo = 0;
+        }
     }
 
     @Override
@@ -49,7 +52,8 @@ public class ContaPoupanca extends Conta implements Remunerada {
             throw new IllegalArgumentException("O valor para taxa deve ser positivo.");
         }
 
-        this.saldo *= porcentagemTaxa;
+        this.saldo += this.saldo * porcentagemTaxa / 100;
+
     }
 
 }

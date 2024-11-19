@@ -12,6 +12,11 @@ public class ContaCorrente extends Conta implements Pix {
 
     public ContaCorrente(String correntistaNome, String correntistaCPF, double saldo) {
         super(correntistaNome, correntistaCPF, saldo);
+
+        if (saldo < 0) {
+            this.saldo = 0;
+        }
+
     }
 
     public ContaCorrente(String correntistaNome, String correntistaCPF) {
