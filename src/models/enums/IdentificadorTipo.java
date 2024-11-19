@@ -3,7 +3,8 @@ package models.enums;
 public enum IdentificadorTipo {
 
     SAQUE("Saque"),
-    DEPOSITO("Depósito");
+    DEPOSITO("Depósito"),
+    TRANSFERENCIA("Transferencia");
 
     private final String tipoNome;
 

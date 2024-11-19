@@ -1,5 +1,7 @@
 package models;
 
+import models.exceptions.SaldoInsuficienteException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +12,8 @@ public abstract class Conta {
     private int numeroConta;
     private String correntistaNome;
     private String correntistaCPF;
-    private double saldo;
-    private List<Operacao> transacoes;
+    protected double saldo;
+    protected List<Operacao> transacoes;
 
     public Conta(String correntistaNome, String correntistaCPF) {
         numeroContaGerador++;
@@ -55,7 +57,7 @@ public abstract class Conta {
         return transacoes;
     }
 
-    public abstract void sacar(double valor);
+    public abstract void sacar(double valor) throws SaldoInsuficienteException;
     public abstract void depositar(double valor);
 
     @Override
