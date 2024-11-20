@@ -22,19 +22,20 @@ public class Banco {
 
     private void getMenu() {
         System.out.println("""
-                \n- 🏦 MENU DE OPERAÇÕES 🏦 -
-                [1] - Criar Conta Corrente
-                [2] - Criar Conta Poupança
-                [3] - Efetuar Depósito
-                [4] - Efetuar Saque
-                [5] - Aplicar Correção
-                [6] - Cadastrar PIX
-                [7] - Efetuar Pix
-                [8] - Consultar Extrato
-                [0] - Sair""");
+            \n- 🏦 MENU DE OPERAÇÕES 🏦 -
+            [1] - Criar Conta Corrente
+            [2] - Criar Conta Poupança
+            [3] - Criar Conta Especial
+            [4] - Efetuar Depósito
+            [5] - Efetuar Saque
+            [6] - Aplicar Correção
+            [7] - Cadastrar PIX
+            [8] - Efetuar Pix
+            [9] - Consultar Extrato
+            [0] - Sair""");
         System.out.print("\nDigite aqui: ");
     }
-
+    
     private void iniciar() {
         boolean app = true;
 
@@ -51,32 +52,31 @@ public class Banco {
                         criarContaPoupanca();
                         break;
                     case 3:
-                        efetuarDeposito();
+                        criarContaEspecial();
                         break;
                     case 4:
-                        efetuarSaque();
+                        efetuarDeposito();
                         break;
                     case 5:
-                        aplicarCorrecao();
+                        efetuarSaque();
                         break;
                     case 6:
-                        cadastrarPix();
+                        aplicarCorrecao();
                         break;
                     case 7:
-                        efetuarPix();
+                        cadastrarPix();
                         break;
                     case 8:
+                        efetuarPix();
+                        break;
+                    case 9:
                         consultarExtrato();
                         break;
-                    case 0:
-                        input.close();
-                        System.out.println("\n- Obrigado por utilizar os serviços do Banco Object! 🏦");
-                        app = false;
-                        break;
                     default:
-                        System.out.println("- Operação inválida.");
+                        System.out.println("Opção inválida. Tente novamente.");
                         break;
                 }
+
             } catch (InputMismatchException e) {
                 System.out.println("\nErro: Entrada inválida. Por favor, insira um número.");
                 input.nextLine(); // Limpando buffer
@@ -151,6 +151,40 @@ public class Banco {
         contas.add(novaContaPoupanca);
 
         System.out.println("\n- Conta criada com sucesso: n° " + novaContaPoupanca.getNumeroConta());
+    }
+
+    private void criarContaEspecial() throws ContaJaCadastradaException, DocumentoInvalidoException {
+        System.out.print("\n- Digite o nome do correntista: ");
+        input.nextLine();
+        String correntistaNome = input.nextLine();
+
+        boolean nomeDisponibilidade = verificarDisponibilidadePorNome(correntistaNome);
+
+        if (!nomeDisponibilidade) {
+            throw new ContaJaCadastradaException("Nome já cadastrado no sistema.");
+        }
+
+        System.out.print("- Digite o CPF do correntista: ");
+        String correntistaCPF = input.next();
+
+        boolean cpfDisponibilidade = verificarDisponibilidadePorCPF(correntistaCPF);
+
+        if (!cpfDisponibilidade) {
+            throw new ContaJaCadastradaException("CPF já cadastrado no sistema.");
+        }
+
+        boolean cpfEhValido = ValidarCPF.cpfEhValido(correntistaCPF);
+
+        if (!cpfEhValido) {
+            throw new DocumentoInvalidoException("CPF inválido.");
+        }
+
+        Conta novaContaEspecial = new ContaEspecial(correntistaNome, correntistaCPF);
+        contas.add(novaContaEspecial);
+
+        double limiteEspecial = ((ContaEspecial) novaContaEspecial).getLimiteEspecial();
+
+        System.out.println("\n- Conta especial criada com sucesso: n° " + novaContaEspecial.getNumeroConta() + " | Limite Especial: " + String.format("%.2f", limiteEspecial));
     }
 
     private void efetuarDeposito() throws ContaNaoEncontradaException {
