@@ -2,8 +2,7 @@ package models;
 
 import models.exceptions.SaldoInsuficienteException;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public abstract class Conta implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static int numeroContaGerador = 0;
+    private static transient int numeroContaGerador = 0;
 
     private int numeroConta;
     private String correntistaNome;
@@ -26,7 +25,7 @@ public abstract class Conta implements Serializable {
         this.correntistaNome = correntistaNome;
         this.correntistaCPF = correntistaCPF;
         this.saldo = 0;
-        this.transacoes = new ArrayList<Operacao>();
+        this.transacoes = new ArrayList<>();
     }
 
     public Conta(String correntistaNome, String correntistaCPF, double saldo) {
@@ -35,7 +34,7 @@ public abstract class Conta implements Serializable {
         this.correntistaNome = correntistaNome;
         this.correntistaCPF = correntistaCPF;
         this.saldo = saldo;
-        this.transacoes = new ArrayList<Operacao>();
+        this.transacoes = new ArrayList<>();
     }
 
     public int getNumeroConta() {
@@ -74,5 +73,17 @@ public abstract class Conta implements Serializable {
                 ", saldo=" + saldo +
                 ", transacoes=" + transacoes +
                 '}';
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+        oos.writeInt(numeroContaGerador);
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        numeroContaGerador = ois.readInt();
     }
 }
