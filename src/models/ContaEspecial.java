@@ -27,8 +27,7 @@ public class ContaEspecial extends ContaCorrente {
     }
 
     @Override
-    public synchronized void sacar(double valor) throws SaldoInsuficienteException {
-
+    public void sacar(double valor) throws SaldoInsuficienteException {
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor para saque deve ser positivo.");
         }
@@ -52,19 +51,18 @@ public class ContaEspecial extends ContaCorrente {
     }
 
     @Override
-    public synchronized void efetuarPix(List<String> usuariosPix, ContaCorrente destinatario, double valor) throws PixNaoCadastradoException, SaldoInsuficienteException {
-
+    public void efetuarPix(List<String> usuariosPix, ContaCorrente destinatario, double valor) throws PixNaoCadastradoException, SaldoInsuficienteException {
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor para transferência deve ser positivo.");
         }
         if (!usuariosPix.contains(this.getCorrentistaCPF())) {
-            throw new PixNaoCadastradoException("O CPF do remetente não está cadastrado no PIX.");
+            throw new PixNaoCadastradoException("O CPF do remetente não está cadastrado no Pix.");
         }
         if (!usuariosPix.contains(destinatario.getCorrentistaCPF())) {
-            throw new PixNaoCadastradoException("O CPF do destinatário não está cadastrado no PIX.");
+            throw new PixNaoCadastradoException("O CPF do destinatário não está cadastrado no Pix.");
         }
         if ((this.saldo + this.limiteEspecial) < valor) {
-            throw new SaldoInsuficienteException("Saldo insuficiente para realizar a transferência PIX.");
+            throw new SaldoInsuficienteException("Saldo insuficiente para realizar a transferência Pix.");
         }
 
         destinatario.receberPix(usuariosPix, valor);

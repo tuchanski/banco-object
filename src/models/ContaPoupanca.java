@@ -18,8 +18,7 @@ public class ContaPoupanca extends Conta implements Remunerada {
     }
 
     @Override
-    public synchronized void sacar(double valor) throws SaldoInsuficienteException {
-
+    public void sacar(double valor) throws SaldoInsuficienteException {
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor para saque deve ser positivo.");
         }
@@ -30,30 +29,24 @@ public class ContaPoupanca extends Conta implements Remunerada {
 
         this.saldo -= valor;
         transacoes.add(new Operacao(valor, IdentificadorTipo.SAQUE));
-
     }
 
     @Override
-    public synchronized void depositar(double valor) {
-
+    public void depositar(double valor) {
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor para depósito deve ser positivo.");
         }
 
         this.saldo += valor;
         transacoes.add(new Operacao(valor, IdentificadorTipo.DEPOSITO));
-
     }
 
     @Override
-    public synchronized void taxaCorrecao(double porcentagemTaxa) {
-
+    public void taxaCorrecao(double porcentagemTaxa) {
         if (porcentagemTaxa <= 0) {
             throw new IllegalArgumentException("O valor para taxa deve ser positivo.");
         }
 
         this.saldo += this.saldo * porcentagemTaxa / 100;
-
     }
-
 }

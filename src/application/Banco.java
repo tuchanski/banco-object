@@ -25,7 +25,7 @@ public class Banco {
             [4] - Efetuar Depósito
             [5] - Efetuar Saque
             [6] - Aplicar Correção
-            [7] - Cadastrar PIX
+            [7] - Cadastrar Pix
             [8] - Efetuar Pix
             [9] - Consultar Extrato
             [0] - Sair""");

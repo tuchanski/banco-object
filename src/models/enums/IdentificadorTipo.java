@@ -4,7 +4,7 @@ public enum IdentificadorTipo {
 
     SAQUE("Saque"),
     DEPOSITO("Depósito"),
-    TRANSFERENCIA("Transferencia"),
+    TRANSFERENCIA("Transferência"),
     PIX_IN("Pix In"),
     PIX_OUT("Pix Out"),;
 
