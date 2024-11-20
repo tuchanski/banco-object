@@ -32,7 +32,6 @@ public class Banco {
      * Construtor da classe Banco.
      * Inicializa o serviço bancário, recupera o seu estado a partir de um arquivo serializado.
      * Caso o arquivo não exista, cria uma nova instância de {@link BancoService}
-     *
      */
     public Banco() {
         bancoService = desserializarBancoService();
