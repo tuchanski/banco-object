@@ -104,7 +104,7 @@ public class Banco {
     private void serializarBancoService() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
             oos.writeObject(bancoService);
-            System.out.println("\n- Estado do BancoService salvo com sucesso.");
+            //System.out.println("\n- Estado do BancoService salvo com sucesso.");
         } catch (IOException e) {
             System.out.println("\nErro ao salvar o estado do BancoService: " + e.getMessage());
         }
@@ -116,10 +116,10 @@ public class Banco {
      */
     private BancoService desserializarBancoService() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            System.out.println("\n- Estado do BancoService carregado com sucesso.");
+            //System.out.println("\n- Estado do BancoService carregado com sucesso.");
             return (BancoService) ois.readObject();
         } catch (FileNotFoundException e) {
-            System.out.println("\n- Nenhum estado anterior encontrado. Iniciando novo BancoService.");
+            //System.out.println("\n- Nenhum estado anterior encontrado. Iniciando novo BancoService.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("\nErro ao carregar o estado do BancoService: " + e.getMessage());
         }

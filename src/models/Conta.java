@@ -11,7 +11,8 @@ public abstract class Conta implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static transient int numeroContaGerador = 0;
+    private static final String FILE_NAME = "numeroContaGerador.ser";
+    private static int numeroContaGerador = restaurarNumeroContaGerador();
 
     private int numeroConta;
     private String correntistaNome;
@@ -21,6 +22,7 @@ public abstract class Conta implements Serializable {
 
     public Conta(String correntistaNome, String correntistaCPF) {
         numeroContaGerador++;
+        salvarNumeroContaGerador();
         this.numeroConta = numeroContaGerador;
         this.correntistaNome = correntistaNome;
         this.correntistaCPF = correntistaCPF;
@@ -30,6 +32,7 @@ public abstract class Conta implements Serializable {
 
     public Conta(String correntistaNome, String correntistaCPF, double saldo) {
         numeroContaGerador++;
+        salvarNumeroContaGerador();
         this.numeroConta = numeroContaGerador;
         this.correntistaNome = correntistaNome;
         this.correntistaCPF = correntistaCPF;
@@ -75,15 +78,27 @@ public abstract class Conta implements Serializable {
                 '}';
     }
 
-    @Serial
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-        oos.writeInt(numeroContaGerador);
+    /**
+     * Salva o valor atual de numeroContaGerador em um arquivo.
+     */
+    private static void salvarNumeroContaGerador() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeInt(numeroContaGerador);
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar numeroContaGerador: " + e.getMessage());
+        }
     }
 
-    @Serial
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        numeroContaGerador = ois.readInt();
+    /**
+     * Restaura o valor de numeroContaGerador do arquivo, se existir.
+     *
+     * @return o último valor gerado, ou 0 se o arquivo não existir.
+     */
+    private static int restaurarNumeroContaGerador() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            return ois.readInt();
+        } catch (IOException e) {
+            return 0;
+        }
     }
 }
