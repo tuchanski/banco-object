@@ -76,7 +76,6 @@ public class BancoService implements Serializable {
         System.out.println("\n- Conta especial criada com sucesso: n° " + novaContaEspecial.getNumeroConta() + " | Limite Especial: " + String.format("%.2f", limiteEspecial));
     }
 
-
     /**
      * Realiza um depósito em uma conta específica.
      *
@@ -94,7 +93,6 @@ public class BancoService implements Serializable {
         conta.depositar(quantiaDeposito);
         System.out.println("- Depósito de R$" + String.format("%.2f", quantiaDeposito) + " realizado com sucesso.");
     }
-
 
     /**
      * Realiza um saque em uma conta específica.
@@ -128,7 +126,6 @@ public class BancoService implements Serializable {
         System.out.println("- Correção de " + taxa + "% realizada com sucesso.");
     }
 
-
     /**
      * Cadastra uma chave PIX associada a um CPF.
      *
@@ -154,7 +151,6 @@ public class BancoService implements Serializable {
             throw new TipoContaException("Conta selecionada não é Conta Corrente/Especial.");
         }
     }
-
 
     /**
      * Realiza uma transferência via PIX entre duas contas.
@@ -184,7 +180,6 @@ public class BancoService implements Serializable {
         }
     }
 
-
     /**
      * Exibe o histórico de transações de uma conta.
      *
@@ -210,7 +205,6 @@ public class BancoService implements Serializable {
         operacoesConta.forEach(System.out::println);
     }
 
-
     /**
      * Exibe todas as contas registradas no sistema.
      */
@@ -220,7 +214,6 @@ public class BancoService implements Serializable {
     }
 
     // Métodos Privados
-
 
     /**
      * Verifica a disponibilidade de um nome e CPF no sistema.
@@ -250,7 +243,6 @@ public class BancoService implements Serializable {
         }
     }
 
-
     /**
      * Busca uma conta pelo CPF.
      *
@@ -261,7 +253,6 @@ public class BancoService implements Serializable {
         return contas.stream().filter(conta -> conta.getCorrentistaCPF().equals(cpf)).findFirst().orElse(null);
     }
 
-
     /**
      * Busca uma conta pelo número.
      *
@@ -271,7 +262,6 @@ public class BancoService implements Serializable {
     private Conta getContaPorNumero(int numeroConta) {
         return contas.stream().filter(conta -> conta.getNumeroConta() == numeroConta).findFirst().orElse(null);
     }
-
 
     /**
      * Aplica uma taxa de correção a todas as contas poupança.
@@ -286,7 +276,6 @@ public class BancoService implements Serializable {
                 );
     }
 
-
     /**
      * Verifica se nome está disponível no sistema.
      * @param nome Nome a ser procurado.
@@ -295,8 +284,7 @@ public class BancoService implements Serializable {
     private boolean verificarDisponibilidadePorNome(String nome) {
         return contas.stream().noneMatch(conta -> conta.getCorrentistaNome().equals(nome));
     }
-
-
+    
     /**
      * Verifica se o CPF está disponível no sistema.
      * @param cpf CPF a ser procurado.
