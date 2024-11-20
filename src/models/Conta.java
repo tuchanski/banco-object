@@ -2,10 +2,15 @@ package models;
 
 import models.exceptions.SaldoInsuficienteException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Conta {
+public abstract class Conta implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private static int numeroContaGerador = 0;
 
