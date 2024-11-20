@@ -2,12 +2,17 @@ package models;
 
 import models.enums.IdentificadorTipo;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Operacao {
+public class Operacao implements Serializable {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final LocalDateTime data;
     private final double valor;
@@ -47,6 +52,14 @@ public class Operacao {
         return identificadorTipo;
     }
 
+    public double getSaldoAtual() {
+        return saldoAtual;
+    }
+
+    public void setSaldoAtual(double saldoAtual) {
+        this.saldoAtual = saldoAtual;
+    }
+
     @Override
     public String toString() {
         return formatter.format(data) + " - " +
@@ -56,12 +69,9 @@ public class Operacao {
                 "Saldo: " + String.format("%.2f", saldoAtual);
     }
 
-
-    public double getSaldoAtual() {
-        return saldoAtual;
-    }
-
-    public void setSaldoAtual(double saldoAtual) {
-        this.saldoAtual = saldoAtual;
+    @Serial
+    private void readObject(java.io.ObjectInputStream ois) throws java.io.IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     }
 }

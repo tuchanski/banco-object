@@ -3,13 +3,18 @@ package service;
 import models.*;
 import models.exceptions.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BancoService {
+public class BancoService implements Serializable {
 
-    private final static List<Conta> contas = new ArrayList<>();
-    private final static List<String> cpfsPix = new ArrayList<>();
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private final List<Conta> contas = new ArrayList<>();
+    private final List<String> cpfsPix = new ArrayList<>();
 
     public void criarContaCorrente(String correntistaNome, String correntistaCPF) throws ContaJaCadastradaException, DocumentoInvalidoException {
         checaDisponibilidadeNomeCPF(correntistaNome, correntistaCPF);

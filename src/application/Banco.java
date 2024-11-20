@@ -3,6 +3,7 @@ package application;
 import models.exceptions.*;
 import service.BancoService;
 
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,8 +14,16 @@ public class Banco {
         banco.iniciar();
     }
 
-    private final BancoService bancoService = new BancoService();
+    private BancoService bancoService;
     private final Scanner input = new Scanner(System.in);
+    private static final String FILE_NAME = "banco_service.ser";
+
+    public Banco() {
+        bancoService = desserializarBancoService();
+        if (bancoService == null) {
+            bancoService = new BancoService();
+        }
+    }
 
     private void getMenu() {
         System.out.println("""
@@ -51,6 +60,7 @@ public class Banco {
                     case 8 -> efetuarPix();
                     case 9 -> consultarExtrato();
                     case 0 -> {
+                        serializarBancoService();
                         input.close();
                         System.out.println("\n- Obrigado por utilizar o Banco Object. 🏦");
                         app = false;
@@ -65,6 +75,27 @@ public class Banco {
                 System.out.println("\nErro: " + e.getMessage());
             }
         }
+    }
+
+    private void serializarBancoService() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeObject(bancoService);
+            System.out.println("\n- Estado do BancoService salvo com sucesso.");
+        } catch (IOException e) {
+            System.out.println("\nErro ao salvar o estado do BancoService: " + e.getMessage());
+        }
+    }
+
+    private BancoService desserializarBancoService() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            System.out.println("\n- Estado do BancoService carregado com sucesso.");
+            return (BancoService) ois.readObject();
+        } catch (FileNotFoundException e) {
+            System.out.println("\n- Nenhum estado anterior encontrado. Iniciando novo BancoService.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("\nErro ao carregar o estado do BancoService: " + e.getMessage());
+        }
+        return null;
     }
 
     private void criarContaCorrente() throws ContaJaCadastradaException, DocumentoInvalidoException {
