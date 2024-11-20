@@ -2,10 +2,8 @@ package models;
 
 /**
  * Classe utilitária para validação de números de CPF (Cadastro de Pessoa Física).
- * <p>
  * Essa classe fornece métodos para verificar se um CPF é válido seguindo as regras
  * estabelecidas pelo Ministério da Fazenda do Brasil.
- * </p>
  */
 
 public class ValidarCPF {
@@ -18,8 +16,8 @@ public class ValidarCPF {
     /**
      * Calcula um dígito verificador de acordo com os pesos fornecidos.
      *
-     * @param str a sequência de números a ser avaliada.
-     * @return o dígito verificador calculado.
+     * @param str A sequência de números a ser avaliada.
+     * @return O dígito verificador calculado.
      */
     private static int calcularDigito(String str) {
         int soma = 0;
@@ -33,13 +31,11 @@ public class ValidarCPF {
 
     /**
      * Verifica se o número de CPF fornecido é válido.
-     * <p>
      * Um CPF válido deve ter 11 dígitos, não ser composto por todos os dígitos iguais,
      * e possuir dígitos verificadores que atendam aos critérios do cálculo.
-     * </p>
      *
-     * @param cpf o número de CPF a ser validado, sem formatação (somente números).
-     * @return {@code true} se o CPF for válido; {@code false} caso contrário.
+     * @param cpf O número de CPF a ser validado, sem formatação (somente números).
+     * @return {@code true} Se o CPF for válido; {@code false} caso contrário.
      */
     public static boolean cpfEhValido(String cpf) {
         if (cpf == null || cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) {

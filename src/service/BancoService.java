@@ -284,7 +284,7 @@ public class BancoService implements Serializable {
     private boolean verificarDisponibilidadePorNome(String nome) {
         return contas.stream().noneMatch(conta -> conta.getCorrentistaNome().equals(nome));
     }
-    
+
     /**
      * Verifica se o CPF está disponível no sistema.
      * @param cpf CPF a ser procurado.
