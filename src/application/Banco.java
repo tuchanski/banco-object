@@ -1,9 +1,3 @@
-/**
- * Classe principal do Banco Object.
- * Responsável por inicializar e gerenciar as operações do sistema bancário.
- * O estado do serviço bancário é persistido e recuperado automaticamente.
- */
-
 package application;
 
 import models.exceptions.*;
@@ -12,6 +6,12 @@ import service.BancoService;
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+/**
+ * Classe principal do Banco Object.
+ * Responsável por inicializar e gerenciar as operações do sistema bancário.
+ * O estado do serviço bancário é persistido e recuperado automaticamente.
+ */
 
 public class Banco {
 
