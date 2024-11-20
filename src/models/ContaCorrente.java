@@ -35,7 +35,11 @@ public class ContaCorrente extends Conta implements Pix {
         }
 
         this.saldo -= valor;
-        transacoes.add(new Operacao(valor, IdentificadorTipo.SAQUE));
+
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.SAQUE);
+        operacao.setSaldoAtual(this.saldo);
+
+        transacoes.add(operacao);
 
     }
 
@@ -47,7 +51,11 @@ public class ContaCorrente extends Conta implements Pix {
         }
 
         this.saldo += valor;
-        transacoes.add(new Operacao(valor, IdentificadorTipo.DEPOSITO));
+
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.DEPOSITO);
+        operacao.setSaldoAtual(this.saldo);
+
+        transacoes.add(operacao);
     }
 
     @Override
@@ -78,7 +86,11 @@ public class ContaCorrente extends Conta implements Pix {
 
         destinatario.receberPix(usuariosPix, valor);
         this.saldo -= valor;
-        transacoes.add(new Operacao(valor, IdentificadorTipo.TRANSFERENCIA));
+
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.TRANSFERENCIA);
+        operacao.setSaldoAtual(this.saldo);
+
+        transacoes.add(operacao);
     }
 
     @Override
@@ -89,7 +101,10 @@ public class ContaCorrente extends Conta implements Pix {
         }
 
         this.saldo += valor;
-        transacoes.add(new Operacao(valor, IdentificadorTipo.TRANSFERENCIA));
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.TRANSFERENCIA);
+        operacao.setSaldoAtual(this.saldo);
+
+        transacoes.add(operacao);
     }
 
 }

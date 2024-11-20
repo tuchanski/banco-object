@@ -3,12 +3,17 @@ package models;
 import models.enums.IdentificadorTipo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Operacao {
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final LocalDateTime data;
     private final double valor;
     private final IdentificadorTipo identificadorTipo;
+
+    private double saldoAtual;
 
     public Operacao(LocalDateTime data, double valor, IdentificadorTipo identificadorTipo) {
         this.data = data;
@@ -36,7 +41,14 @@ public class Operacao {
 
     @Override
     public String toString() {
-        return "Operacao[data=" + data + ", valor=" + valor + ", tipo=" + identificadorTipo + "]";
+        return formatter.format(data) + " - " + identificadorTipo.getTipoNome() + " - " + valor + "\nSaldo " + saldoAtual;
     }
 
+    public double getSaldoAtual() {
+        return saldoAtual;
+    }
+
+    public void setSaldoAtual(double saldoAtual) {
+        this.saldoAtual = saldoAtual;
+    }
 }

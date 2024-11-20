@@ -3,6 +3,7 @@ package application;
 import models.Conta;
 import models.ContaCorrente;
 import models.ContaPoupanca;
+import models.Operacao;
 import models.exceptions.*;
 
 import java.util.ArrayList;
@@ -252,7 +253,17 @@ public class Banco {
             throw new ContaNaoEncontradaException("Conta com número " + numeroConta + " não encontrada.");
         }
 
-        System.out.println(conta.getTransacoes());
+        System.out.println();
+        List<Operacao> operacoesConta = conta.getTransacoes();
+
+        if (operacoesConta.isEmpty()) {
+            System.out.println("- Sem transações disponíveis no histórico da conta.");
+            return;
+        }
+
+        System.out.println("---- Histórico de Transações ----");
+        operacoesConta.forEach(System.out::println);
+
     }
 
     // Aux
