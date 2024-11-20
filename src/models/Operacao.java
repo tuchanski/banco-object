@@ -12,6 +12,7 @@ public class Operacao {
     private final LocalDateTime data;
     private final double valor;
     private final IdentificadorTipo identificadorTipo;
+    private String msg;
 
     private double saldoAtual;
 
@@ -25,6 +26,13 @@ public class Operacao {
         this.valor = valor;
         this.identificadorTipo = identificadorTipo;
         this.data = LocalDateTime.now();
+    }
+
+    public Operacao(double valor, IdentificadorTipo identificadorTipo, String msg) {
+        this.valor = valor;
+        this.identificadorTipo = identificadorTipo;
+        this.data = LocalDateTime.now();
+        this.msg = msg;
     }
 
     public LocalDateTime getData() {
@@ -41,8 +49,13 @@ public class Operacao {
 
     @Override
     public String toString() {
-        return formatter.format(data) + " - " + identificadorTipo.getTipoNome() + " - " + String.format("%.2f", valor) + "\nSaldo " + String.format("%.2f", saldoAtual);
+        return formatter.format(data) + " - " +
+                identificadorTipo.getTipoNome() + " - " +
+                String.format("%.2f", valor) + "\n" +
+                (msg != null ? "Mensagem: " + msg + "\n" : "") +
+                "Saldo: " + String.format("%.2f", saldoAtual);
     }
+
 
     public double getSaldoAtual() {
         return saldoAtual;

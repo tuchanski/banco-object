@@ -49,16 +49,17 @@ public class ContaPoupanca extends Conta implements Remunerada {
 
     @Override
     public void taxaCorrecao(double porcentagemTaxa) {
-        if (porcentagemTaxa <= 0) {
-            throw new IllegalArgumentException("O valor para taxa deve ser positivo.");
+        if (porcentagemTaxa < 0) {
+            throw new IllegalArgumentException("A taxa de correção deve ser positiva.");
         }
 
-        double valor = this.saldo + (this.saldo * (porcentagemTaxa / 100));
-        this.saldo = valor;
+        double rendimento = this.saldo * (porcentagemTaxa / 100);
+        this.saldo += rendimento;
 
-        Operacao operacao = new Operacao(valor, IdentificadorTipo.CORRECAO_TAX);
+        Operacao operacao = new Operacao(rendimento, IdentificadorTipo.CORRECAO_TAX, "Taxa " + String.format("%.2f", porcentagemTaxa) + "%");
         operacao.setSaldoAtual(this.saldo);
 
         transacoes.add(operacao);
     }
+
 }
