@@ -70,6 +70,7 @@ public class Banco {
                         break;
                     case 0:
                         input.close();
+                        System.out.println("\n- Obrigado por utilizar os serviços do Banco Object! 🏦");
                         app = false;
                         break;
                     default:
@@ -182,7 +183,7 @@ public class Banco {
             throw new ContaNaoEncontradaException("Conta com n° " + numeroConta + " não encontrada.");
         }
 
-        System.out.print("\n- Informe a quantia desejada para saque: ");
+        System.out.print("- Informe a quantia desejada para saque: ");
         double quantiaSaque = input.nextDouble();
 
         try {
@@ -232,14 +233,14 @@ public class Banco {
             throw new ContaNaoEncontradaException("CPF " + cpfOrigem + " não cadastrada para PIX.");
         }
 
-        System.out.print("\n- Insira o CPF do destino: ");
+        System.out.print("- Insira o CPF do destino: ");
         String cpfDestino = input.next();
 
         if (!cpfsPix.contains(cpfDestino)) {
             throw new ContaNaoEncontradaException("CPF " + cpfDestino + " não cadastrada para PIX.");
         }
 
-        System.out.print("\n- Insira o valor em R$: ");
+        System.out.print("- Insira o valor em R$: ");
         double valor = input.nextDouble();
 
         ContaCorrente origem = (ContaCorrente) getContaPorCPF(cpfOrigem);
