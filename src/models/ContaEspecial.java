@@ -34,7 +34,7 @@ public class ContaEspecial extends ContaCorrente {
         }
 
         if ((this.saldo + limiteEspecial) < valor) {
-            throw new SaldoInsuficienteException("Saldo insuficiente para realizar o saque, mesmo utilizando o limite especial.");
+            throw new SaldoInsuficienteException("Saldo insuficiente para realizar o saque.");
         }
 
         if (saldo >= valor) {

@@ -35,7 +35,7 @@ public class Banco {
             [0] - Sair""");
         System.out.print("\nDigite aqui: ");
     }
-    
+
     private void iniciar() {
         boolean app = true;
 
@@ -264,14 +264,14 @@ public class Banco {
         String cpfOrigem = input.next();
 
         if (!cpfsPix.contains(cpfOrigem)) {
-            throw new ContaNaoEncontradaException("CPF " + cpfOrigem + " não cadastrada para PIX.");
+            throw new ContaNaoEncontradaException("CPF " + cpfOrigem + " não cadastrado para PIX.");
         }
 
         System.out.print("- Insira o CPF do destino: ");
         String cpfDestino = input.next();
 
         if (!cpfsPix.contains(cpfDestino)) {
-            throw new ContaNaoEncontradaException("CPF " + cpfDestino + " não cadastrada para PIX.");
+            throw new ContaNaoEncontradaException("CPF " + cpfDestino + " não cadastrado para PIX.");
         }
 
         System.out.print("- Insira o valor em R$: ");
