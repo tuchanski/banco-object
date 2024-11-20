@@ -112,10 +112,11 @@ public class Banco {
         Conta novaContaCorrente = new ContaCorrente(correntistaNome, correntistaCPF);
         contas.add(novaContaCorrente);
 
-        System.out.println("- Conta criada com sucesso: n° " + novaContaCorrente.getNumeroConta());
+        System.out.println("\n- Conta criada com sucesso: n° " + novaContaCorrente.getNumeroConta());
     }
 
     private void criarContaPoupanca() throws ContaJaCadastradaException {
+
         System.out.print("\n- Digite o nome do correntista: ");
         input.nextLine();
         String correntistaNome = input.nextLine();
@@ -139,7 +140,7 @@ public class Banco {
 
         contas.add(novaContaPoupanca);
 
-        System.out.println("- Conta criada com sucesso: n° " + novaContaPoupanca.getNumeroConta());
+        System.out.println("\n- Conta criada com sucesso: n° " + novaContaPoupanca.getNumeroConta());
     }
 
     private void efetuarDeposito() throws ContaNaoEncontradaException {
@@ -162,6 +163,7 @@ public class Banco {
     }
 
     private void efetuarSaque() throws ContaNaoEncontradaException {
+
         System.out.print("\n- Informe o número da conta: ");
         int numeroConta = input.nextInt();
 
@@ -235,7 +237,7 @@ public class Banco {
         ContaCorrente destino = (ContaCorrente) getContaPorCPF(cpfDestino);
 
         try {
-            origem.efetuarPix(cpfsPix, destino, valor); // Já chama a função pro destino receber
+            origem.efetuarPix(cpfsPix, destino, valor); // Destino recebe automaticamente
             System.out.println("- Pix de R$" + valor + " realizado com sucesso de " + cpfOrigem + " para " + cpfDestino + ".");
         } catch (PixNaoCadastradoException | SaldoInsuficienteException e) {
             System.out.println("\nErro: " + e.getMessage());

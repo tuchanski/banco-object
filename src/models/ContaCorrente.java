@@ -87,7 +87,7 @@ public class ContaCorrente extends Conta implements Pix {
         destinatario.receberPix(usuariosPix, valor);
         this.saldo -= valor;
 
-        Operacao operacao = new Operacao(valor, IdentificadorTipo.TRANSFERENCIA);
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.PIX_OUT);
         operacao.setSaldoAtual(this.saldo);
 
         transacoes.add(operacao);
@@ -101,7 +101,7 @@ public class ContaCorrente extends Conta implements Pix {
         }
 
         this.saldo += valor;
-        Operacao operacao = new Operacao(valor, IdentificadorTipo.TRANSFERENCIA);
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.PIX_IN);
         operacao.setSaldoAtual(this.saldo);
 
         transacoes.add(operacao);
