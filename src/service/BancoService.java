@@ -133,6 +133,11 @@ public class BancoService implements Serializable {
         operacoesConta.forEach(System.out::println);
     }
 
+    public void exibirContasRegistradas() {
+        System.out.println();
+        contas.forEach(System.out::println);
+    }
+
 
     private void checaDisponibilidadeNomeCPF(String correntistaNome, String correntistaCPF) throws ContaJaCadastradaException, DocumentoInvalidoException {
         boolean nomeDisponibilidade = verificarDisponibilidadePorNome(correntistaNome);

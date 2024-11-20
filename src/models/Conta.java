@@ -11,7 +11,7 @@ public abstract class Conta implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final String FILE_NAME = "numeroContaGerador.ser";
+    private static final String FILE_NAME = "numero_conta_gerador.ser";
     private static int numeroContaGerador = restaurarNumeroContaGerador();
 
     private int numeroConta;
@@ -21,24 +21,29 @@ public abstract class Conta implements Serializable {
     protected List<Operacao> transacoes;
 
     public Conta(String correntistaNome, String correntistaCPF) {
-        numeroContaGerador++;
-        salvarNumeroContaGerador();
         this.numeroConta = numeroContaGerador;
+
         this.correntistaNome = correntistaNome;
         this.correntistaCPF = correntistaCPF;
         this.saldo = 0;
         this.transacoes = new ArrayList<>();
+
+        numeroContaGerador++;
+        salvarNumeroContaGerador();
     }
 
     public Conta(String correntistaNome, String correntistaCPF, double saldo) {
-        numeroContaGerador++;
-        salvarNumeroContaGerador();
         this.numeroConta = numeroContaGerador;
+
         this.correntistaNome = correntistaNome;
         this.correntistaCPF = correntistaCPF;
         this.saldo = saldo;
         this.transacoes = new ArrayList<>();
+
+        numeroContaGerador++;
+        salvarNumeroContaGerador();
     }
+
 
     public int getNumeroConta() {
         return numeroConta;
@@ -67,17 +72,6 @@ public abstract class Conta implements Serializable {
     public abstract void sacar(double valor) throws SaldoInsuficienteException;
     public abstract void depositar(double valor);
 
-    @Override
-    public String toString() {
-        return "Conta{" +
-                "numeroConta=" + numeroConta +
-                ", correntistaNome='" + correntistaNome + '\'' +
-                ", correntistaCPF='" + correntistaCPF + '\'' +
-                ", saldo=" + saldo +
-                ", transacoes=" + transacoes +
-                '}';
-    }
-
     /**
      * Salva o valor atual de numeroContaGerador em um arquivo.
      */
@@ -101,4 +95,12 @@ public abstract class Conta implements Serializable {
             return 0;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Conta: " + numeroConta + " - " +
+                "Correntista: " + correntistaNome + " (CPF: " + correntistaCPF + ") - " +
+                "Saldo: " + String.format("%.2f", saldo);
+    }
+
 }

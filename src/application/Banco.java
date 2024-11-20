@@ -55,6 +55,7 @@ public class Banco {
             [7] - Cadastrar Pix
             [8] - Efetuar Pix
             [9] - Consultar Extrato
+            [10] - Exibir Contas Registradas
             [0] - Sair""");
         System.out.print("\nDigite aqui: ");
     }
@@ -80,6 +81,7 @@ public class Banco {
                     case 7 -> cadastrarPix();
                     case 8 -> efetuarPix();
                     case 9 -> consultarExtrato();
+                    case 10 -> exibirContasRegistradas();
                     case 0 -> {
                         serializarBancoService();
                         input.close();
@@ -250,5 +252,9 @@ public class Banco {
         System.out.print("\n- Insira o número da conta: ");
         int numeroConta = input.nextInt();
         bancoService.consultarExtrato(numeroConta);
+    }
+
+    private void exibirContasRegistradas() {
+        bancoService.exibirContasRegistradas();
     }
 }
