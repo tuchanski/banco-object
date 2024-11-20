@@ -1,9 +1,6 @@
 package application;
 
-import models.Conta;
-import models.ContaCorrente;
-import models.ContaPoupanca;
-import models.Operacao;
+import models.*;
 import models.exceptions.*;
 
 import java.util.ArrayList;
@@ -18,10 +15,10 @@ public class Banco {
         banco.iniciar();
     }
 
-    private static List<Conta> contas = new ArrayList<>();
-    private static List<String> cpfsPix = new ArrayList<>();
+    private final static List<Conta> contas = new ArrayList<>();
+    private final static List<String> cpfsPix = new ArrayList<>();
 
-    private Scanner input = new Scanner(System.in);
+    private final Scanner input = new Scanner(System.in);
 
     private void getMenu() {
         System.out.println("""
@@ -35,7 +32,7 @@ public class Banco {
                 [7] - Efetuar Pix
                 [8] - Consultar Extrato
                 [0] - Sair""");
-        System.out.printf("\nDigite aqui: ");
+        System.out.print("\nDigite aqui: ");
     }
 
     private void iniciar() {
@@ -88,7 +85,7 @@ public class Banco {
         }
     }
 
-    private void criarContaCorrente() throws ContaJaCadastradaException {
+    private void criarContaCorrente() throws ContaJaCadastradaException, DocumentoInvalidoException {
 
         System.out.print("\n- Digite o nome do correntista: ");
         input.nextLine();
@@ -107,6 +104,12 @@ public class Banco {
 
         if (!cpfDisponibilidade) {
             throw new ContaJaCadastradaException("CPF já cadastrado no sistema.");
+        }
+
+        boolean cpfEhValido = ValidarCPF.cpfEhValido(correntistaCPF);
+
+        if (!cpfEhValido) {
+            throw new DocumentoInvalidoException("CPF inválido.");
         }
 
         Conta novaContaCorrente = new ContaCorrente(correntistaNome, correntistaCPF);
@@ -115,7 +118,7 @@ public class Banco {
         System.out.println("\n- Conta criada com sucesso: n° " + novaContaCorrente.getNumeroConta());
     }
 
-    private void criarContaPoupanca() throws ContaJaCadastradaException {
+    private void criarContaPoupanca() throws ContaJaCadastradaException, DocumentoInvalidoException {
 
         System.out.print("\n- Digite o nome do correntista: ");
         input.nextLine();
@@ -134,6 +137,12 @@ public class Banco {
 
         if (!cpfDisponibilidade) {
             throw new ContaJaCadastradaException("CPF já cadastrado no sistema.");
+        }
+
+        boolean cpfEhValido = ValidarCPF.cpfEhValido(correntistaCPF);
+
+        if (!cpfEhValido) {
+            throw new DocumentoInvalidoException("CPF inválido.");
         }
 
         Conta novaContaPoupanca = new ContaPoupanca(correntistaNome, correntistaCPF);
