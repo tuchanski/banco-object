@@ -254,6 +254,9 @@ public class Banco {
         bancoService.consultarExtrato(numeroConta);
     }
 
+    /**
+     * Exibe todas as contas registradas.
+     */
     private void exibirContasRegistradas() {
         bancoService.exibirContasRegistradas();
     }
