@@ -100,7 +100,7 @@ public class Banco {
             throw new ContaJaCadastradaException("Nome já cadastrado no sistema.");
         }
 
-        System.out.print("\n- Digite o CPF do correntista: ");
+        System.out.print("- Digite o CPF do correntista: ");
         String correntistaCPF = input.next();
 
         boolean cpfDisponibilidade = verificarDisponibilidadePorCPF(correntistaCPF);
@@ -127,7 +127,7 @@ public class Banco {
             throw new ContaJaCadastradaException("Nome já cadastrado no sistema.");
         }
 
-        System.out.print("\n- Digite o CPF do correntista: ");
+        System.out.print("- Digite o CPF do correntista: ");
         String correntistaCPF = input.next();
 
         boolean cpfDisponibilidade = verificarDisponibilidadePorCPF(correntistaCPF);
@@ -154,12 +154,12 @@ public class Banco {
             throw new ContaNaoEncontradaException("Conta com n° " + numeroConta + " não encontrada.");
         }
 
-        System.out.print("\n- Informe a quantia desejada para depósito: ");
+        System.out.print("- Informe a quantia desejada para depósito: ");
         double quantiaDeposito = input.nextDouble();
 
         conta.depositar(quantiaDeposito);
 
-        System.out.println("- Depósito de R$" + quantiaDeposito + " realizado com sucesso.");
+        System.out.println("- Depósito de R$" + String.format("%.2f", quantiaDeposito) + " realizado com sucesso.");
     }
 
     private void efetuarSaque() throws ContaNaoEncontradaException {
@@ -170,7 +170,7 @@ public class Banco {
         Conta conta = getContaPorNumero(numeroConta);
 
         if (conta == null) {
-            throw new ContaNaoEncontradaException("- Conta com n° " + numeroConta + " não encontrada.");
+            throw new ContaNaoEncontradaException("Conta com n° " + numeroConta + " não encontrada.");
         }
 
         System.out.print("\n- Informe a quantia desejada para saque: ");
@@ -178,7 +178,7 @@ public class Banco {
 
         try {
             conta.sacar(quantiaSaque);
-            System.out.println("- Saque de R$" + quantiaSaque + " realizado com sucesso.");
+            System.out.println("- Saque de R$" + String.format("%.2f", quantiaSaque) + " realizado com sucesso.");
         } catch (SaldoInsuficienteException e) {
             System.out.println("\nErro: " + e.getMessage());
         }
@@ -191,25 +191,25 @@ public class Banco {
         System.out.println("- Correção de " + taxa + "% realizada com sucesso.");
     }
 
-    private void cadastrarPix() throws ContaNaoEncontradaException {
+    private void cadastrarPix() throws ContaNaoEncontradaException, TipoContaException {
         System.out.print("\n- Informe o CPF para registro: ");
         String cpf = input.next();
 
         Conta conta = getContaPorCPF(cpf);
 
         if (conta == null) {
-            throw new ContaNaoEncontradaException("- Conta com CPF " + cpf + " não encontrada.");
+            throw new ContaNaoEncontradaException("Conta com CPF " + cpf + " não encontrada.");
         }
 
         if (conta instanceof ContaCorrente contaCorrente) {
             try {
                 contaCorrente.cadastrarPix(cpfsPix);
-                System.out.println("Chave pix cadastrada com sucesso.");
+                System.out.println("- Chave pix cadastrada com sucesso.");
             } catch (PixJaCadastradoException e) {
                 System.out.println("\nErro: " + e.getMessage());
             }
         } else {
-            System.out.println("- O tipo da conta desejada não é Corrente."); // Criar Exceção nova
+            throw new TipoContaException("Conta selecionada não é Conta Corrente.");
         }
 
     }
@@ -238,7 +238,7 @@ public class Banco {
 
         try {
             origem.efetuarPix(cpfsPix, destino, valor); // Destino recebe automaticamente
-            System.out.println("- Pix de R$" + valor + " realizado com sucesso de " + cpfOrigem + " para " + cpfDestino + ".");
+            System.out.println("- Pix de R$" + String.format("%.2f", valor) + " realizado com sucesso de " + cpfOrigem + " para " + cpfDestino + ".");
         } catch (PixNaoCadastradoException | SaldoInsuficienteException e) {
             System.out.println("\nErro: " + e.getMessage());
         }

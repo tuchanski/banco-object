@@ -41,7 +41,7 @@ public class Operacao {
 
     @Override
     public String toString() {
-        return formatter.format(data) + " - " + identificadorTipo.getTipoNome() + " - " + valor + "\nSaldo " + saldoAtual;
+        return formatter.format(data) + " - " + identificadorTipo.getTipoNome() + " - " + String.format("%.2f", valor) + "\nSaldo " + String.format("%.2f", saldoAtual);
     }
 
     public double getSaldoAtual() {
