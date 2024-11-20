@@ -6,7 +6,8 @@ public enum IdentificadorTipo {
     DEPOSITO("Depósito"),
     TRANSFERENCIA("Transferência"),
     PIX_IN("Pix In"),
-    PIX_OUT("Pix Out"),;
+    PIX_OUT("Pix Out"),
+    CORRECAO_TAX("Correção Taxa");
 
     private final String tipoNome;
 

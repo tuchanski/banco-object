@@ -28,7 +28,10 @@ public class ContaPoupanca extends Conta implements Remunerada {
         }
 
         this.saldo -= valor;
-        transacoes.add(new Operacao(valor, IdentificadorTipo.SAQUE));
+
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.SAQUE);
+        operacao.setSaldoAtual(this.saldo);
+        transacoes.add(operacao);
     }
 
     @Override
@@ -38,7 +41,10 @@ public class ContaPoupanca extends Conta implements Remunerada {
         }
 
         this.saldo += valor;
-        transacoes.add(new Operacao(valor, IdentificadorTipo.DEPOSITO));
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.DEPOSITO);
+        operacao.setSaldoAtual(this.saldo);
+
+        transacoes.add(operacao);
     }
 
     @Override
@@ -47,6 +53,12 @@ public class ContaPoupanca extends Conta implements Remunerada {
             throw new IllegalArgumentException("O valor para taxa deve ser positivo.");
         }
 
-        this.saldo += this.saldo * porcentagemTaxa / 100;
+        double valor = this.saldo + (this.saldo * (porcentagemTaxa / 100));
+        this.saldo = valor;
+
+        Operacao operacao = new Operacao(valor, IdentificadorTipo.CORRECAO_TAX);
+        operacao.setSaldoAtual(this.saldo);
+
+        transacoes.add(operacao);
     }
 }
