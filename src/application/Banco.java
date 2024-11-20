@@ -17,7 +17,7 @@ public class Banco {
 
     /**
      * Ponto de entrada da aplicação.
-     * @param args argumentos de linha de comendo (não utilizados).
+     * @param args Argumentos de linha de comendo (não utilizados).
      */
     public static void main(String[] args) {
         Banco banco = new Banco();
@@ -132,8 +132,9 @@ public class Banco {
 
     /**
      * Cria uma conta corrente no banco.
-     * @throws ContaJaCadastradaException se a conta já existir.
-     * @throws DocumentoInvalidoException se o CPF informado for inválido.
+     *
+     * @throws ContaJaCadastradaException Se a conta já existir.
+     * @throws DocumentoInvalidoException Se o CPF informado for inválido.
      */
     private void criarContaCorrente() throws ContaJaCadastradaException, DocumentoInvalidoException {
         System.out.print("\n- Digite o nome do correntista: ");
@@ -148,8 +149,9 @@ public class Banco {
 
     /**
      * Cria uma conta poupança no banco.
-     * @throws ContaJaCadastradaException se a conta já existir.
-     * @throws DocumentoInvalidoException se o CPF informado for inválido.
+     *
+     * @throws ContaJaCadastradaException Se a conta já existir.
+     * @throws DocumentoInvalidoException Se o CPF informado for inválido.
      */
     private void criarContaPoupanca() throws ContaJaCadastradaException, DocumentoInvalidoException {
         System.out.print("\n- Digite o nome do correntista: ");
@@ -164,8 +166,9 @@ public class Banco {
 
     /**
      * Cria uma conta especial no banco.
-     * @throws ContaJaCadastradaException se a conta já existir.
-     * @throws DocumentoInvalidoException se o CPF informado for inválido.
+     *
+     * @throws ContaJaCadastradaException Se a conta já existir.
+     * @throws DocumentoInvalidoException Se o CPF informado for inválido.
      */
     private void criarContaEspecial() throws ContaJaCadastradaException, DocumentoInvalidoException {
         System.out.print("\n- Digite o nome do correntista: ");
@@ -180,7 +183,8 @@ public class Banco {
 
     /**
      * Efetua um depósito para uma conta registrada no banco.
-     * @throws ContaNaoEncontradaException se a conta não existir.
+     *
+     * @throws ContaNaoEncontradaException Se a conta não existir.
      */
     private void efetuarDeposito() throws ContaNaoEncontradaException {
         System.out.print("\n- Informe o número da conta: ");
@@ -194,7 +198,8 @@ public class Banco {
 
     /**
      * Efetua um saque de uma conta registrada no banco.
-     * @throws ContaNaoEncontradaException se a conta não existir.
+     *
+     * @throws ContaNaoEncontradaException Se a conta não existir.
      */
     private void efetuarSaque() throws ContaNaoEncontradaException {
         System.out.print("\n- Informe o número da conta: ");
@@ -217,8 +222,9 @@ public class Banco {
 
     /**
      * Cadastra CPF como chave Pix caso a conta seja corrente/especial.
-     * @throws ContaNaoEncontradaException se a conta não existir.
-     * @throws TipoContaException se a conta não for corrente/especial.
+     *
+     * @throws ContaNaoEncontradaException Se a conta não existir.
+     * @throws TipoContaException Se a conta não for corrente/especial.
      */
     private void cadastrarPix() throws ContaNaoEncontradaException, TipoContaException {
         System.out.print("\n- Informe o CPF para registro: ");
@@ -229,7 +235,8 @@ public class Banco {
     /**
      * Efetua pix de uma conta origem para conta destino. Ambas as contas devem ser corrente/especial e registradas
      * através do método {@link Banco#cadastrarPix()}.
-     * @throws ContaNaoEncontradaException se a conta não existir.
+     *
+     * @throws ContaNaoEncontradaException Se a conta não existir.
      */
     private void efetuarPix() throws ContaNaoEncontradaException {
         System.out.print("\n- Insira o CPF de origem: ");
@@ -246,7 +253,8 @@ public class Banco {
 
     /**
      * Mostra extrato de uma conta registrada.
-     * @throws ContaNaoEncontradaException se a conta não existir.
+     *
+     * @throws ContaNaoEncontradaException Se a conta não existir.
      */
     private void consultarExtrato() throws ContaNaoEncontradaException {
         System.out.print("\n- Insira o número da conta: ");
