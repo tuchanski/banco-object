@@ -3,10 +3,7 @@ package application;
 import models.Conta;
 import models.ContaCorrente;
 import models.ContaPoupanca;
-import models.exceptions.ContaNaoEncontradaException;
-import models.exceptions.PixJaCadastradoException;
-import models.exceptions.PixNaoCadastradoException;
-import models.exceptions.SaldoInsuficienteException;
+import models.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,6 @@ public class Banco {
 
         while(app) {
             getMenu();
-
             try {
                 int modoOperacao = input.nextInt();
 
@@ -84,28 +80,58 @@ public class Banco {
         }
     }
 
-    private void criarContaCorrente() {
+    private void criarContaCorrente() throws ContaJaCadastradaException {
+
         System.out.print("\n- Digite o nome do correntista: ");
-        String correntistaNome = input.next();
+        input.nextLine();
+        String correntistaNome = input.nextLine();
+
+        boolean nomeDisponibilidade = verificarDisponibilidadePorNome(correntistaNome);
+
+        if (!nomeDisponibilidade) {
+            throw new ContaJaCadastradaException("Nome já cadastrado no sistema.");
+        }
+
         System.out.print("\n- Digite o CPF do correntista: ");
         String correntistaCPF = input.next();
 
-        Conta conta = new ContaCorrente(correntistaNome, correntistaCPF);
-        contas.add(conta);
+        boolean cpfDisponibilidade = verificarDisponibilidadePorCPF(correntistaCPF);
 
-        System.out.println("Conta criada com sucesso: n°" + conta.getNumeroConta());
+        if (!cpfDisponibilidade) {
+            throw new ContaJaCadastradaException("CPF já cadastrado no sistema.");
+        }
+
+        Conta novaContaCorrente = new ContaCorrente(correntistaNome, correntistaCPF);
+        contas.add(novaContaCorrente);
+
+        System.out.println("- Conta criada com sucesso: n° " + novaContaCorrente.getNumeroConta());
     }
 
-    private void criarContaPoupanca() {
+    private void criarContaPoupanca() throws ContaJaCadastradaException {
         System.out.print("\n- Digite o nome do correntista: ");
-        String correntistaNome = input.next();
+        input.nextLine();
+        String correntistaNome = input.nextLine();
+
+        boolean nomeDisponibilidade = verificarDisponibilidadePorNome(correntistaNome);
+
+        if (!nomeDisponibilidade) {
+            throw new ContaJaCadastradaException("Nome já cadastrado no sistema.");
+        }
+
         System.out.print("\n- Digite o CPF do correntista: ");
         String correntistaCPF = input.next();
 
-        Conta conta = new ContaPoupanca(correntistaNome, correntistaCPF);
-        contas.add(conta);
+        boolean cpfDisponibilidade = verificarDisponibilidadePorCPF(correntistaCPF);
 
-        System.out.println("- Conta criada com sucesso: n°" + conta.getNumeroConta());
+        if (!cpfDisponibilidade) {
+            throw new ContaJaCadastradaException("CPF já cadastrado no sistema.");
+        }
+
+        Conta novaContaPoupanca = new ContaPoupanca(correntistaNome, correntistaCPF);
+        
+        contas.add(novaContaPoupanca);
+
+        System.out.println("- Conta criada com sucesso: n° " + novaContaPoupanca.getNumeroConta());
     }
 
     private void efetuarDeposito() throws ContaNaoEncontradaException {
@@ -116,7 +142,7 @@ public class Banco {
         Conta conta = getContaPorNumero(numeroConta);
 
         if (conta == null) {
-            throw new ContaNaoEncontradaException("- Conta com n° " + numeroConta + " não encontrada.");
+            throw new ContaNaoEncontradaException("Conta com n° " + numeroConta + " não encontrada.");
         }
 
         System.out.print("\n- Informe a quantia desejada para depósito: ");
@@ -144,7 +170,7 @@ public class Banco {
             conta.sacar(quantiaSaque);
             System.out.println("- Saque de R$" + quantiaSaque + " realizado com sucesso.");
         } catch (SaldoInsuficienteException e) {
-            System.out.println("\n- Erro: " + e.getMessage());
+            System.out.println("\nErro: " + e.getMessage());
         }
     }
 
@@ -165,9 +191,7 @@ public class Banco {
             throw new ContaNaoEncontradaException("- Conta com CPF " + cpf + " não encontrada.");
         }
 
-        if (conta instanceof ContaCorrente) {
-            ContaCorrente contaCorrente = (ContaCorrente) conta;
-
+        if (conta instanceof ContaCorrente contaCorrente) {
             try {
                 contaCorrente.cadastrarPix(cpfsPix);
                 System.out.println("Chave pix cadastrada com sucesso.");
@@ -186,7 +210,7 @@ public class Banco {
         String cpfOrigem = input.next();
 
         if (!cpfsPix.contains(cpfOrigem)) {
-            throw new ContaNaoEncontradaException("- CPF " + cpfOrigem + " não cadastrada para PIX.");
+            throw new ContaNaoEncontradaException("CPF " + cpfOrigem + " não cadastrada para PIX.");
         }
 
         System.out.print("\n- Insira o CPF do destino: ");
@@ -204,7 +228,7 @@ public class Banco {
 
         try {
             origem.efetuarPix(cpfsPix, destino, valor); // Já chama a função pro destino receber
-            System.out.println("Pix de R$" + valor + " realizado com sucesso de: " + cpfOrigem + " para: " + cpfDestino);
+            System.out.println("- Pix de R$" + valor + " realizado com sucesso de " + cpfOrigem + " para " + cpfDestino + ".");
         } catch (PixNaoCadastradoException | SaldoInsuficienteException e) {
             System.out.println("\nErro: " + e.getMessage());
         }
@@ -240,6 +264,14 @@ public class Banco {
                 .map(conta -> (ContaPoupanca) conta)
                 .forEach(contaPoupanca -> {contaPoupanca.taxaCorrecao(taxa);}
                 );
+    }
+
+    private boolean verificarDisponibilidadePorNome(String nome) {
+        return contas.stream().noneMatch(conta -> conta.getCorrentistaNome().equals(nome));
+    }
+
+    private boolean verificarDisponibilidadePorCPF(String cpf) {
+        return contas.stream().noneMatch(conta -> conta.getCorrentistaCPF().equals(cpf));
     }
 
 }
