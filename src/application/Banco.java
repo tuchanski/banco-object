@@ -6,6 +6,7 @@ import models.ContaPoupanca;
 import models.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -73,7 +74,13 @@ public class Banco {
                         input.close();
                         app = false;
                         break;
+                    default:
+                        System.out.println("- Operação inválida.");
+                        break;
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("\nErro: Entrada inválida. Por favor, insira um número.");
+                input.nextLine(); // Limpando buffer
             } catch (Exception e) {
                 System.out.println("\nErro: " + e.getMessage());
             }
@@ -128,7 +135,7 @@ public class Banco {
         }
 
         Conta novaContaPoupanca = new ContaPoupanca(correntistaNome, correntistaCPF);
-        
+
         contas.add(novaContaPoupanca);
 
         System.out.println("- Conta criada com sucesso: n° " + novaContaPoupanca.getNumeroConta());
