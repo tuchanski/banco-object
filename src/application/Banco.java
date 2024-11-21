@@ -88,7 +88,7 @@ public class Banco {
                         System.out.println("\n- Obrigado por utilizar o Banco Object. 🏦");
                         app = false;
                     }
-                    default -> System.out.println("Opção inválida. Tente novamente.");
+                    default -> System.out.println("\nOpção inválida. Tente novamente.");
                 }
 
             } catch (InputMismatchException e) {
