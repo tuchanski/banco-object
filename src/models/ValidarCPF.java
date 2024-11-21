@@ -21,10 +21,12 @@ public class ValidarCPF {
      */
     private static int calcularDigito(String str) {
         int soma = 0;
+
         for (int i = 0; i < str.length(); i++) {
             int digito = Character.getNumericValue(str.charAt(i));
             soma += digito * ValidarCPF.PESO_CPF[ValidarCPF.PESO_CPF.length - str.length() + i];
         }
+
         int resto = 11 - (soma % 11);
         return (resto > 9) ? 0 : resto;
     }

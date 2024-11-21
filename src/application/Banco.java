@@ -17,7 +17,7 @@ public class Banco {
 
     /**
      * Ponto de entrada da aplicação.
-     * @param args Argumentos de linha de comendo (não utilizados).
+     * @param args Argumentos de linha de comando (não utilizados).
      */
     public static void main(String[] args) {
         Banco banco = new Banco();
